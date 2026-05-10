@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise ❤️</title>
+    <style>
+        :root { --primary-pink: #ff4d6d; --bg-color: #fff0f3; }
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Arial', sans-serif; background-color: var(--bg-color); display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        
+        /* Floating Hearts Animation */
+        .heart { position: absolute; color: var(--primary-pink); font-size: 20px; animation: float 4s ease-in infinite; opacity: 0; z-index: 1; }
+        @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+
+        .card { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2); text-align: center; max-width: 400px; width: 85%; z-index: 10; border: 2px solid #ffccd5; }
+        h1 { color: var(--primary-pink); font-size: 1.4rem; margin-bottom: 10px; }
+        .sub-text { color: #888; font-size: 0.85rem; margin-bottom: 20px; font-style: italic; }
+        
+        .timer-container { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .time-box { background: #fff5f6; padding: 10px; border-radius: 12px; min-width: 55px; border: 1px solid #ffccd5; }
+        .time-value { font-size: 1.5rem; font-weight: bold; color: var(--primary-pink); }
+        .time-label { font-size: 0.6rem; color: #aaa; text-transform: uppercase; }
+
+        .btn { background: var(--primary-pink); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); margin-top: 15px; width: 100%; font-weight: bold; }
+        .btn:hover { background: #ff758f; transform: translateY(-2px); }
+
+        .hidden { display: none; }
+        .surprise-msg { font-size: 1.6rem; color: var(--primary-pink); font-weight: bold; animation: pop 0.5s ease; }
+        @keyframes pop { 0% { transform: scale(0.6); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <script>
+        // Background hearts generator
+        for (let i = 0; i < 25; i++) {
+            let heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(heart);
+        }
+    </script>
+
+    <div class="card">
+        <div id="page1">
+            <h1>Counting down to My Favorite Person's Day ❤️</h1>
+            <p class="sub-text">"You're the best thing that ever happened to me"</p>
+            
+            <div class="timer-container">
+                <div class="time-box"><div class="time-value" id="d">00</div><div class="time-label">Days</div></div>
+                <div class="time-box"><div class="time-value" id="h">00</div><div class="time-label">Hrs</div></div>
+                <div class="time-box"><div class="time-value" id="m">00</div><div class="time-label">Mins</div></div>
+                <div class="time-box"><div class="time-value" id="s">00</div><div class="time-label">Secs</div></div>
+            </div>
+
+            <p style="font-size: 0.75rem; color: #ff8fa3;">✨ A special surprise awaits you at midnight... ✨</p>
+            <button class="btn" onclick="showSurprise()">Let's Celebrate! 🎉</button>
+        </div>
+
+        <div id="page2" class="hidden">
+            <div class="surprise-msg">🎉 Happy Birthday, My Bestie! 🎂</div>
+            <p style="margin-top: 20px; color: #555;">May your day be filled with as much happiness as you bring into my life. ❤️</p>
+            <div style="font-size: 50px; margin-top: 15px;">🎁 ✨ 🎈</div>
+            <button class="btn" onclick="location.reload()" style="background: #ccc; font-size: 0.8rem;">Go Back</button>
+        </div>
+    </div>
+
+    <script>
+        // CHANGE DATE HERE: (YYYY-MM-DD)
+        const birthday = new Date('2026-11-27T00:00:00').getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const gap = birthday - now;
+
+            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+
+            document.getElementById('d').innerText = Math.floor(gap / day);
+            document.getElementById('h').innerText = Math.floor((gap % day) / hour);
+            document.getElementById('m').innerText = Math.floor((gap % hour) / minute);
+            document.getElementById('s').innerText = Math.floor((gap % minute) / second);
+        }
+
+        setInterval(updateTimer, 1000);
+        function showSurprise() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
